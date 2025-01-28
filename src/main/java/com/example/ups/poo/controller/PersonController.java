@@ -1,7 +1,7 @@
-package com.example.ups.poo.controllers;
+package com.example.ups.poo.controller;
 
-import com.example.ups.poo.dto.Person;
 import com.example.ups.poo.service.PersonService;
+import com.example.ups.poo.dto.Person;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,7 +14,6 @@ public class PersonController {
     public PersonController(PersonService personService) {
         this.personService = personService;
     }
-
 
     @GetMapping("/get-all-people")
     public List<Person> getAllPeople() {
