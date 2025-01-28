@@ -8,10 +8,18 @@ import java.util.List;
 
 @Service
 public class PersonService {
+
+    List<Person> personList = new ArrayList<>();
+
     public List<Person> getAllPeople() {
-        List<Person> personList = new ArrayList<>();
-        Person p1 = new Person("Madeleine", "Ortiz", 19, "0953340312");
-        Person p2 = new Person("Débora", "Benavides", 20, "0918818766");
+       Person p1 = new Person();
+       p1.setName("Made");
+       p1.setLastname("Ortiz");
+       p1.setAge(19);
+       p1.setId("0953340312");
+
+       Person p2 = new Person("Deby", "Benavides", 20, "0918818766");
+
         personList.add(p1);
         personList.add(p2);
         return personList;
