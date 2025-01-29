@@ -4,9 +4,7 @@ import com.example.ups.poo.dto.Person;
 import com.example.ups.poo.service.PersonService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +24,10 @@ public class PersonController {
     @GetMapping("/get-person")
     public ResponseEntity getPersonById(@RequestParam String id) {
         return personService.getPersonById(id);
+    }
+
+    @PostMapping("/person")
+        public ResponseEntity createPerson(@RequestBody Person person) {
+            return personService.createPerson(person);
     }
 }
