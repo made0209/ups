@@ -22,16 +22,37 @@ public class PersonService {
     }
 
     public ResponseEntity getPersonById(String id) {
-        for (Person person: personList) {
+        for (Person person : personList) {
             if (id.equalsIgnoreCase(person.getId())) {
                 return ResponseEntity.status(HttpStatus.OK).body(person);
             }
         }
-        String message = "Person with id: " +id + " not found";
+        String message = "Person with id: " + id + " not found";
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);
     }
 
     public ResponseEntity createPerson(Person person) {
+        if (person.getId() == null || person.getId().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Id is a required field");
+        }
+
+        if (person.getName() == null || person.getName().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name is a required field");
+        }
+
+        if (person.getLastname() == null || person.getLastname().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Lastname is a required field");
+        }
+
+        if (person.getAge() <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Age is a required field");
+        }
+
+        for (Person existingPerson : personList) {
+            if (existingPerson.getId().equalsIgnoreCase(person.getId())) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Person with ID " + person.getId() + " already exists");
+            }
+        }
         personList.add(person);
         return ResponseEntity.status(HttpStatus.OK).body("Person successfully registered");
     }
