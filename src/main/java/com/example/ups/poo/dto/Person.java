@@ -9,7 +9,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-
 public class Person {
     private String name;
     private String lastname;
