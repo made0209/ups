@@ -100,18 +100,22 @@ public class PersonService {
         Optional<Person> personOptional = personRepository.findByPersonId(personDTO.getId());
         if (personOptional.isPresent()) {
             Person person = personOptional.get();
-        if (personDTO.getName() != null && !personDTO.getName().isEmpty()) {
-            String fullName = personDTO.getName();
-        if (fullName.contains(" ")) {
-            String[] fullNameArray = fullName.split(" ");
-            person.setName(fullNameArray[0]);
-            person.setLastname(fullNameArray[1]);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name must include both first name and last name");
-        }
-    }
+            if (personDTO.getName() != null && !personDTO.getName().isEmpty()) {
+                String fullName = personDTO.getName();
+                if (fullName.contains(" ")) {
+                    String[] fullNameArray = fullName.split(" ");
+                    person.setName(fullNameArray[0]);
+                    person.setLastname(fullNameArray[1]);
+                } else {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Name must include both first name and last name");
+                }
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("A name must be provided");
+            }
         if (personDTO.getAge() > 0) {
             person.setAge(personDTO.getAge());
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please enter a valid age greater than zero");
         }
         personRepository.save(person);
         return ResponseEntity.status(HttpStatus.OK).body("Person with id: " + personDTO.getId() + " was successfully updated");
